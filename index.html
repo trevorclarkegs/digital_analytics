@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Digital Analytics — Growth Proposal</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --color-background-primary:#ffffff;
+  --color-background-secondary:#f6f7f9;
+  --color-border-tertiary:#e4e6ea;
+  --color-border-secondary:#d1d5db;
+  --color-border-primary:#9ca3af;
+  --color-text-primary:#111827;
+  --color-text-secondary:#4b5563;
+  --border-radius-lg:12px;
+  --border-radius-md:6px;
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-mono:'SF Mono','Fira Code',monospace;
+  --navy:#0C2340;
+  --navy-light:#1a3a5c;
+  --blue:#1a56db;
+  --teal:#0F6E56;
+  --amber:#633806;
+  --red:#791F1F;
+}
+body{font-family:var(--font-sans);background:#f0f2f5;display:flex;justify-content:center;align-items:flex-start;min-height:100vh;padding:24px}
+.app{font-family:var(--font-sans);background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;width:100%;max-width:980px;box-shadow:0 4px 24px rgba(0,0,0,.08)}
+
+/* TOPBAR */
+.topbar{background:#0C2340;padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+.topbar-title{font-size:15px;font-weight:500;color:#fff}
+.topbar-sub{font-size:12px;color:#85B7EB;margin-top:2px}
+.da-badge{background:#1a3a5c;border:0.5px solid #2a5080;border-radius:4px;padding:3px 10px;font-size:11px;font-weight:500;color:#B5D4F4;letter-spacing:0.06em;text-transform:uppercase}
+.gm{font-size:11px;font-weight:500;color:#85B7EB;letter-spacing:0.1em;text-transform:uppercase}
+
+/* MAIN NAV */
+.nav{display:flex;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);overflow-x:auto}
+.nb{padding:11px 18px;font-size:13px;color:var(--color-text-secondary);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:color 0.12s}
+.nb:hover{color:var(--color-text-primary)}
+.nb.active{color:#0C2340;border-bottom-color:#0C2340;font-weight:500}
+
+/* PANELS */
+.panel{display:none;padding:22px 24px}
+.panel.active{display:block}
+
+/* SUBNAV */
+.subnav{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.snb{padding:6px 14px;font-size:12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;transition:all 0.12s}
+.snb:hover{border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.snb.active{background:#0C2340;color:#fff;border-color:#0C2340}
+.sub-panel{display:none}
+.sub-panel.active{display:block}
+
+/* SECTION LABEL */
+.sl{font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px}
+
+/* INFO BOX */
+.ib{background:var(--color-background-secondary);border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;border-left:3px solid #0C2340;padding:14px 16px;font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:18px}
+
+/* GRIDS */
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}
+
+/* CARDS */
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:14px 16px}
+.ct{font-size:13px;font-weight:500;margin-bottom:6px}
+.cb{font-size:13px;color:var(--color-text-secondary);line-height:1.55}
+
+/* STAT CARDS */
+.stat-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:16px;text-align:center}
+.stat-num{font-size:32px;font-weight:700;color:#0C2340;line-height:1}
+.stat-lbl{font-size:11px;color:var(--color-text-secondary);margin-top:5px;letter-spacing:0.04em}
+
+/* STEPS */
+.steps-wrap{display:flex;flex-direction:column;gap:0;margin-bottom:18px}
+.sr2{display:flex;gap:0;align-items:stretch}
+.snc{display:flex;flex-direction:column;align-items:center;width:36px;flex-shrink:0}
+.scir{width:28px;height:28px;border-radius:50%;background:#0C2340;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#fff;flex-shrink:0}
+.sln{flex:1;width:1px;background:var(--color-border-secondary);margin:3px 0}
+.sc2{flex:1;padding:0 0 20px 12px}
+.stit{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;padding-top:4px}
+.sbod{font-size:13px;color:var(--color-text-secondary);line-height:1.55;margin-bottom:8px}
+
+/* TAGS */
+.tr{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tg{font-size:11px;padding:2px 8px;border-radius:3px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary)}
+.tg.teal{background:#E1F5EE;color:#085041}
+.tg.navy{background:#E6F1FB;color:#0C447C}
+.tg.amb{background:#FAEEDA;color:#633806}
+.tg.red{background:#FCEBEB;color:#791F1F}
+.tg.blue{background:#EFF6FF;color:#1e40af}
+
+/* POSITION CARDS */
+.pos-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:16px}
+.pos-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.pos-title{font-size:14px;font-weight:500;color:var(--color-text-primary)}
+.pos-badge{font-size:11px;padding:2px 8px;border-radius:3px;font-weight:500}
+.pos-item{font-size:12px;color:var(--color-text-secondary);padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);line-height:1.45;display:flex;gap:8px;align-items:flex-start}
+.pos-item:last-child{border-bottom:none}
+.pos-dot{width:5px;height:5px;border-radius:50%;background:#0C2340;margin-top:5px;flex-shrink:0}
+
+/* ORG CHART */
+.org-wrap{display:flex;flex-direction:column;align-items:center;gap:0;margin-top:20px}
+.org-node{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 16px;text-align:center;min-width:150px;position:relative}
+.org-node.new-role{border:0.5px solid #1a56db;background:#EFF6FF}
+.org-node-title{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.org-node-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.org-new-badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:#0C2340;color:#fff;font-size:9px;font-weight:600;padding:2px 8px;border-radius:10px;letter-spacing:0.06em;white-space:nowrap}
+.org-line{width:1px;height:24px;background:var(--color-border-secondary);margin:0 auto}
+.org-h-wrap{display:flex;justify-content:center;gap:40px;position:relative}
+.org-h-wrap::before{content:'';position:absolute;top:0;left:calc(25% + 20px);right:calc(25% + 20px);height:1px;background:var(--color-border-secondary)}
+
+/* BLOCKER */
+.blocker-item{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-left:3px solid #E24B4A;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding:10px 14px;font-size:13px;color:var(--color-text-secondary);line-height:1.5;margin-bottom:8px}
+
+/* BEFORE/AFTER */
+.ba-wrap{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);overflow:hidden;margin-bottom:18px}
+.ba-header{display:grid;grid-template-columns:1fr 1fr}
+.ba-head{padding:10px 14px;font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase}
+.ba-head.before{background:#FCEBEB;color:#791F1F;border-right:0.5px solid var(--color-border-tertiary)}
+.ba-head.after{background:#E1F5EE;color:#085041}
+.ba-body{display:grid;grid-template-columns:1fr 1fr}
+.ba-col{padding:12px 14px}
+.ba-col.before{border-right:0.5px solid var(--color-border-tertiary)}
+.ba-item{font-size:12px;color:var(--color-text-secondary);padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;gap:8px;align-items:flex-start;line-height:1.45}
+.ba-item:last-child{border-bottom:none}
+.ba-x{color:#E24B4A;font-size:11px;margin-top:1px;flex-shrink:0}
+.ba-check{color:#0F6E56;font-size:11px;margin-top:1px;flex-shrink:0}
+
+/* TOOL CARDS */
+.tool-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:16px;margin-bottom:10px}
+.tool-name{font-size:14px;font-weight:600;color:#0C2340;margin-bottom:4px}
+.tool-tagline{font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px}
+.tool-desc{font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:10px}
+.tool-impact{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 12px;font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.tool-impact strong{color:var(--color-text-primary);font-weight:500}
+
+/* PERF BARS */
+.perf-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.perf-label{font-size:12px;font-weight:500;width:140px;flex-shrink:0;color:var(--color-text-secondary)}
+.perf-bar-bg{flex:1;background:var(--color-background-secondary);border-radius:3px;height:8px;border:0.5px solid var(--color-border-tertiary)}
+.perf-bar{height:8px;border-radius:3px;transition:width 1s ease}
+.perf-count{font-size:12px;font-weight:600;color:var(--color-text-primary);width:40px;text-align:right;flex-shrink:0}
+
+/* MILESTONE */
+.milestone{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.milestone:last-child{border-bottom:none}
+.m-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.m-date{font-size:11px;font-weight:500;color:#0C2340;min-width:84px;padding-top:2px;flex-shrink:0}
+.m-text{font-size:13px;color:var(--color-text-secondary);line-height:1.5}
+
+/* SCOPE TABLE */
+.scope-table{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);overflow:hidden;margin-bottom:18px}
+.scope-row{display:grid;grid-template-columns:180px 1fr;border-bottom:0.5px solid var(--color-border-tertiary)}
+.scope-row:last-child{border-bottom:none}
+.scope-label{padding:12px 14px;font-size:12px;font-weight:500;color:var(--color-text-primary);background:var(--color-background-secondary);border-right:0.5px solid var(--color-border-tertiary);display:flex;align-items:flex-start;gap:8px}
+.scope-body{padding:12px 14px;font-size:13px;color:var(--color-text-secondary);line-height:1.55}
+.scope-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+
+/* IMPACT BOX */
+.impact-note{margin-top:14px;padding:12px 16px;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;border-left:3px solid #E24B4A;background:var(--color-background-primary);border-top:0.5px solid var(--color-border-tertiary);border-right:0.5px solid var(--color-border-tertiary);border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+
+/* YEAR TOGGLE */
+.yr-btn{padding:5px 16px;border-radius:20px;border:1px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:12px;font-weight:500;color:var(--color-text-secondary);cursor:pointer;transition:all .15s}
+.yr-btn:hover{border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.yr-btn.active{background:#0C2340;color:#fff;border-color:#0C2340}
+
+/* ACCORDION */
+.acc-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:9px 0 0;margin-top:12px;border:none;background:none;cursor:pointer;border-top:0.5px solid var(--color-border-tertiary);font-size:12px;font-weight:500;color:var(--color-text-secondary);transition:color .12s}
+.acc-toggle:hover{color:var(--color-text-primary)}
+.acc-arrow{font-size:10px;transition:transform .2s;display:inline-block}
+.acc-body{display:none;margin-top:12px;padding-top:12px;border-top:0.5px solid var(--color-border-tertiary)}
+.acc-body.open{display:block}
+.acc-arrow.open{transform:rotate(180deg)}
+.save-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-right:6px}
+.save-time{background:#EFF6FF;color:#1e40af}
+.save-money{background:#ECFDF5;color:#065f46}
+.save-both{background:#FDF4FF;color:#6b21a8}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px">
+        <div class="topbar-title">Digital Analytics — Growth Proposal</div>
+        <div class="da-badge">May 2026</div>
+      </div>
+      <div class="topbar-sub">Positions · Portfolio · Innovation · Performance</div>
+    </div>
+    <div class="gm">Greystar</div>
+  </div>
+
+  <!-- MAIN NAV -->
+  <div class="nav">
+    <button class="nb active" onclick="switchTab('overview')">Overview</button>
+    <button class="nb" onclick="switchTab('positions')">New Positions</button>
+    <button class="nb" onclick="switchTab('portfolio')">Portfolio</button>
+    <button class="nb" onclick="switchTab('proactive')">Proactive Tools</button>
+    <button class="nb" onclick="switchTab('performance')">Performance</button>
+  </div>
+
+  <!-- â"€â"€ OVERVIEW â"€â"€ -->
+  <div class="panel active" id="panel-overview">
+    <div class="ib">Our team manages digital analytics infrastructure across 4,000+ Greystar properties — while building proprietary automation tools that reduce risk, save costs, and shift our posture from reactive to proactive. This proposal outlines the case for two new leadership roles and documents the scope and performance of our team.</div>
+    <div class="sl">At a glance — YTD 2026</div>
+    <div class="grid3" style="margin-bottom:20px">
+      <div class="stat-card">
+        <div class="stat-num">4,000+</div>
+        <div class="stat-lbl">Properties Under Management</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">4,179</div>
+        <div class="stat-lbl">Tasks Completed YTD</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5</div>
+        <div class="stat-lbl">Proactive Automation Tools</div>
+      </div>
+    </div>
+    <div class="sl">What this proposal covers</div>
+    <div class="grid2">
+      <div class="card" style="border-left:3px solid #0C2340">
+        <div class="ct">1 · New Positions</div>
+        <div class="cb">The case for a Director of Digital Analytics (1) and Manager of Digital Analytics (2) — including rationale, responsibilities, and proposed org structure.</div>
+      </div>
+      <div class="card" style="border-left:3px solid #0C2340">
+        <div class="ct">2 · Portfolio Scope</div>
+        <div class="cb">Five core workflows our team owns across 4,000+ US properties, the expanding Canadian portfolio, Greystar.com, and corporate career sites.</div>
+      </div>
+      <div class="card" style="border-left:3px solid #0C2340">
+        <div class="ct">3 · Proactive Innovation</div>
+        <div class="cb">Five in-house automation tools (MMCS7000, Exception Trigger, GA4 Flatline, watchDAWG, GTM API) built by our team to identify, prevent, and eliminate issues before they impact the business.</div>
+      </div>
+      <div class="card" style="border-left:3px solid #0C2340">
+        <div class="ct">4 · Team Performance</div>
+        <div class="cb">Wrike-sourced task completion data showing team output YTD across Digital Analytics, India, and Myna — plus the shift from manual identification to automated resolution.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- â"€â"€ POSITIONS â"€â"€ -->
+  <div class="panel" id="panel-positions">
+    <div class="subnav">
+      <button class="snb active" onclick="switchSub('positions','roles')">Proposed Roles</button>
+      <button class="snb" onclick="switchSub('positions','org')">Org Structure</button>
+    </div>
+
+    <div class="sub-panel active" id="positions-roles">
+      <div class="ib">As our portfolio, tooling, and vendor partnerships grow, the team requires a leadership layer that can manage complexity, develop talent, drive vendor relationships, and execute at scale. Currently, there is no management structure between individual contributors and senior leadership.</div>
+      <div class="sl">New roles</div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px">
+
+        <!-- DIRECTOR -->
+        <div class="pos-card" style="border-left:3px solid #0C2340">
+          <div class="pos-header">
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#0C2340;margin-bottom:2px">Trevor Clarke</div>
+              <div class="pos-title" style="font-weight:400">Director, Digital Analytics</div>
+            </div>
+            <div class="pos-badge tg navy">1 Position</div>
+          </div>
+          <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)">Strategy &amp; Oversight</div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Own the analytics roadmap across 4,000+ properties and all corporate sites</div></div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Serve as primary liaison between Digital Analytics, DCOE, and executive stakeholders</div></div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Oversee vendor partnerships and push the needle on enhanced data collection</div></div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Lead expansion into Canadian properties and new market segments</div></div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Sprint planning and prioritization of backlog across all active workflows</div></div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Direct line management for both Manager-level direct reports</div></div>
+        </div>
+
+        <!-- MANAGER 1 — Cookie Compliance & Vendor Standards -->
+        <div class="pos-card" style="border-left:3px solid #1a56db">
+          <div class="pos-header">
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#0C2340;margin-bottom:2px">Christian Myers</div>
+              <div class="pos-title" style="font-weight:400">Manager, Digital Analytics</div>
+            </div>
+            <div class="pos-badge tg blue">Cookie &amp; Compliance</div>
+          </div>
+          <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)">Primary Ownership</div>
+          <div class="pos-item"><div class="pos-dot" style="background:#1a56db"></div><div>Cookie compliance monitoring for all US properties, Greystar.com, and corporate sites</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#1a56db"></div><div>Become expert in GDPR/V2 consent mode and remediate properties impacted by non-compliant cookie settings</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#1a56db"></div><div>Push web vendors to meet and maintain Greystar cookie consent standards</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#1a56db"></div><div>Define and enforce cookie implementation standards across all vendor-built sites</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#1a56db"></div><div>Management of India resources for cookie compliance workflows — sprint planning, backlog, and Wrike task execution</div></div>
+        </div>
+
+        <!-- MANAGER 2 — Event Tracking & Enhanced Data -->
+        <div class="pos-card" style="border-left:3px solid #0F6E56">
+          <div class="pos-header">
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#0C2340;margin-bottom:2px">Destiney Johnson</div>
+              <div class="pos-title" style="font-weight:400">Manager, Digital Analytics</div>
+            </div>
+            <div class="pos-badge tg teal">Event Tracking &amp; Data</div>
+          </div>
+          <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)">Primary Ownership</div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0F6E56"></div><div>Own event tracking implementation and GTM container QA across all properties</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0F6E56"></div><div>Push web vendors for optimized and enhanced event tracking — datalayer improvements, richer GA4 events</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0F6E56"></div><div>Define event tracking standards and drive consistency across all vendor implementations</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0F6E56"></div><div>Managing India resources within Wrike — sprint planning, backlog grooming, and task execution for event tracking workflows</div></div>
+        </div>
+
+      </div>
+
+      <!-- TEAM NOTE -->
+      <div class="ib" style="margin-bottom:18px">While each role has a defined area of primary ownership, we operate as one team. All members — including shared India resources — actively support each other's workflows and projects as needed, ensuring nothing falls through the cracks regardless of who owns the workstream.</div>
+
+      <!-- AUTOMATION CREATION & ENHANCEMENTS -->
+      <div class="sl">Automation creation &amp; enhancements — all positions</div>
+      <div class="card" style="border-left:3px solid #0C2340">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div style="font-size:16px">📊</div>
+          <div>
+            <div class="ct" style="color:#0C2340;font-size:14px">Property Performance QC Dashboard</div>
+            <div style="font-size:12px;color:var(--color-text-secondary);margin-top:1px">Building &amp; continuously enhancing a unified reporting dashboard across all workflows</div>
+          </div>
+        </div>
+        <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:12px">All three roles share ownership in building and improving a centralized QC dashboard that surfaces property-level performance across the team's three core workflow areas — giving leadership a real-time view of portfolio health without manual reporting.</div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+          <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #1a56db">
+            <div style="font-size:11px;font-weight:600;color:#1a56db;margin-bottom:6px;letter-spacing:.04em">🍪 COOKIE COMPLIANCE</div>
+            <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5">Consent banner status, vendor compliance scores, and GDPR/V2 coverage by property</div>
+          </div>
+          <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0F6E56">
+            <div style="font-size:11px;font-weight:600;color:#0F6E56;margin-bottom:6px;letter-spacing:.04em">📡 EVENT TRACKING</div>
+            <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5">GTM container health, GA4 session integrity, datalayer completeness, and exception trigger flags</div>
+          </div>
+          <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #7c3aed">
+            <div style="font-size:11px;font-weight:600;color:#7c3aed;margin-bottom:6px;letter-spacing:.04em">🔗 ATTRIBUTION</div>
+            <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5">Cross-domain tracking accuracy, XDTID integrity, and attribution audit status per property</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-panel" id="positions-org">
+      <div class="ib">The proposed structure creates a direct management layer between senior leadership and individual contributors for the first time — each Manager owns a distinct workflow focus and oversees a dedicated team of India resources.</div>
+      <div class="sl">Proposed reporting structure</div>
+
+      <!-- VP -->
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <div class="org-node" style="min-width:200px">
+          <div class="org-node-title">VP / Senior Leadership</div>
+          <div class="org-node-sub">Existing</div>
+        </div>
+        <div class="org-line"></div>
+
+        <!-- DIRECTOR -->
+        <div class="org-node new-role" style="min-width:220px">
+          <div class="org-new-badge">NEW</div>
+          <div style="font-size:14px;font-weight:700;color:#0C2340;margin-bottom:2px">Trevor Clarke</div>
+          <div class="org-node-title" style="font-weight:400">Director, Digital Analytics</div>
+        </div>
+      </div>
+
+      <!-- Horizontal connector -->
+      <div style="display:flex;justify-content:center;width:100%;margin:0">
+        <div style="width:calc(50% - 10px);border-top:1px solid var(--color-border-secondary);border-right:1px solid var(--color-border-secondary);height:24px;margin-top:0"></div>
+        <div style="width:calc(50% - 10px);border-top:1px solid var(--color-border-secondary);border-left:1px solid var(--color-border-secondary);height:24px;margin-top:0"></div>
+      </div>
+
+      <!-- TWO MANAGERS -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;width:100%">
+
+        <!-- MANAGER 1 — Christian -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+          <div class="org-node new-role" style="min-width:200px;width:100%;border-left:3px solid #1a56db">
+            <div class="org-new-badge" style="background:#1a56db">NEW</div>
+            <div style="font-size:14px;font-weight:700;color:#0C2340;margin-bottom:2px">Christian Myers</div>
+            <div class="org-node-title" style="font-weight:400">Manager, Digital Analytics</div>
+            <div class="org-node-sub">Cookie &amp; Compliance</div>
+          </div>
+
+          <!-- connector down to India grid -->
+          <div style="display:flex;width:100%;justify-content:center">
+            <div style="width:calc(50% - 10px);border-top:1px solid var(--color-border-secondary);border-right:1px solid var(--color-border-secondary);height:20px;margin-top:1px"></div>
+            <div style="width:calc(50% - 10px);border-top:1px solid var(--color-border-secondary);border-left:1px solid var(--color-border-secondary);height:20px;margin-top:1px"></div>
+          </div>
+
+          <!-- 6 India resources -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%">
+            <div class="org-node" style="min-width:0;padding:8px 10px">
+              <div class="org-node-title" style="font-size:11px">India Resource</div>
+              <div class="org-node-sub" style="font-size:10px">Compliance Focus</div>
+            </div>
+            <div class="org-node" style="min-width:0;padding:8px 10px">
+              <div class="org-node-title" style="font-size:11px">India Resource</div>
+              <div class="org-node-sub" style="font-size:10px">Compliance Focus</div>
+            </div>
+            <div class="org-node" style="min-width:0;padding:8px 10px">
+              <div class="org-node-title" style="font-size:11px">India Resource</div>
+              <div class="org-node-sub" style="font-size:10px">Compliance Focus</div>
+            </div>
+            <div class="org-node" style="min-width:0;padding:8px 10px">
+              <div class="org-node-title" style="font-size:11px">India Resource</div>
+              <div class="org-node-sub" style="font-size:10px">Compliance Focus</div>
+            </div>
+            <div class="org-node" style="min-width:0;padding:8px 10px">
+              <div class="org-node-title" style="font-size:11px">India Resource</div>
+              <div class="org-node-sub" style="font-size:10px">Compliance Focus</div>
+            </div>
+            <div class="org-node" style="min-width:0;padding:8px 10px">
+              <div class="org-node-title" style="font-size:11px">India Resource</div>
+              <div class="org-node-sub" style="font-size:10px">Compliance Focus</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MANAGER 2 — Destiney -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+          <div class="org-node new-role" style="min-width:200px;width:100%;border-left:3px solid #0F6E56">
+            <div class="org-new-badge" style="background:#0F6E56">NEW</div>
+            <div style="font-size:14px;font-weight:700;color:#0C2340;margin-bottom:2px">Destiney Johnson</div>
+            <div class="org-node-title" style="font-weight:400">Manager, Digital Analytics</div>
+            <div class="org-node-sub">Event Tracking &amp; Data</div>
+          </div>
+
+          <!-- connector down to India grid -->
+          <div style="display:flex;width:100%;justify-content:center">
+            <div style="width:calc(50% - 10px);border-top:1px solid var(--color-border-secondary);border-right:1px solid var(--color-border-secondary);height:20px;margin-top:1px"></div>
+            <div style="width:calc(50% - 10px);border-top:1px solid var(--color-border-secondary);border-left:1px solid var(--color-border-secondary);height:20px;margin-top:1px"></div>
+          </div>
+
+          <!-- 6 India resources -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%">
+            <div class="org-node" style="min-width:0;padding:8px 10px">
+              <div class="org-node-title" style="font-size:11px">India Resource</div>
+              <div class="org-node-sub" style="font-size:10px">Tracking Focus</div>
+            </div>
+            <div class="org-node" style="min-width:0;padding:8px 10px">
+              <div class="org-node-title" style="font-size:11px">India Resource</div>
+              <div class="org-node-sub" style="font-size:10px">Tracking Focus</div>
+            </div>
+            <div class="org-node" style="min-width:0;padding:8px 10px">
+              <div class="org-node-title" style="font-size:11px">India Resource</div>
+              <div class="org-node-sub" style="font-size:10px">Tracking Focus</div>
+            </div>
+            <div class="org-node" style="min-width:0;padding:8px 10px">
+              <div class="org-node-title" style="font-size:11px">India Resource</div>
+              <div class="org-node-sub" style="font-size:10px">Tracking Focus</div>
+            </div>
+            <div class="org-node" style="min-width:0;padding:8px 10px">
+              <div class="org-node-title" style="font-size:11px">India Resource</div>
+              <div class="org-node-sub" style="font-size:10px">Tracking Focus</div>
+            </div>
+            <div class="org-node" style="min-width:0;padding:8px 10px">
+              <div class="org-node-title" style="font-size:11px">India Resource</div>
+              <div class="org-node-sub" style="font-size:10px">Tracking Focus</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- â"€â"€ PORTFOLIO â"€â"€ -->
+  <div class="panel" id="panel-portfolio">
+    <div class="ib">Five core workflows spanning 4,000+ US properties, the expanding Canadian portfolio, Greystar.com, and corporate career sites. Each workflow is owned end-to-end by the Digital Analytics team.</div>
+    <div class="sl">Workflows owned</div>
+    <div class="scope-table">
+      <div class="scope-row">
+        <div class="scope-label">🍪 Web Cookie Compliance</div>
+        <div class="scope-body">
+          Ensuring all Greystar property websites, Greystar.com, and career sites meet cookie consent and privacy regulations. Actively expanding into the Canadian portfolio.
+          <div class="scope-tags"><span class="tg navy">4,000+ US Sites</span><span class="tg amb">Canadian Portfolio</span><span class="tg teal">Greystar.com + Careers</span></div>
+        </div>
+      </div>
+      <div class="scope-row">
+        <div class="scope-label">📡 Website Event Tracking</div>
+        <div class="scope-body">
+          Implementing and maintaining comprehensive event tracking via GTM across all property websites, corporate sites, and career pages to ensure data integrity for paid media and analytics.
+          <div class="scope-tags"><span class="tg navy">4,000+ US Sites</span><span class="tg amb">Canadian Portfolio</span><span class="tg teal">Greystar.com + Careers</span></div>
+        </div>
+      </div>
+      <div class="scope-row">
+        <div class="scope-label">🔗 Greystar.js Cross-Domain Tracking</div>
+        <div class="scope-body">
+          Deploying Greystar.js on all property websites and online leasing portals. Attaching custom XDTID parameters to all website events and piping data to the Data Marketplace and BigQuery.
+          <div class="scope-tags"><span class="tg navy">All Properties</span><span class="tg navy">Leasing Portals</span><span class="tg teal">BigQuery + DMP</span></div>
+        </div>
+      </div>
+      <div class="scope-row">
+        <div class="scope-label">📊 Dynamic Attribution</div>
+        <div class="scope-body">
+          Continuously auditing website attribution across the full property portfolio to ensure paid media spend is properly credited and marketing investment is accurately measured.
+          <div class="scope-tags"><span class="tg navy">4,000 Property Audits</span><span class="tg amb">Canadian Portfolio</span></div>
+        </div>
+      </div>
+      <div class="scope-row">
+        <div class="scope-label">🤝 DCOE Partnership</div>
+        <div class="scope-body">
+          Supporting in-house SEO implementation and establishing paid media tracking best practices in partnership with the Digital Center of Excellence.
+          <div class="scope-tags"><span class="tg navy">In-House · Strategic</span><span class="tg teal">SEO · Paid Media</span></div>
+        </div>
+      </div>
+      <div class="scope-row">
+        <div class="scope-label">🏢 Web Vendor Partnerships</div>
+        <div class="scope-body">
+          Actively partnering with Greystar's web vendors to push enhanced data collection — driving cookie compliance alignment and datalayer improvements that benefit the full portfolio.
+          <div class="scope-tags"><span class="tg navy">Jonah</span><span class="tg navy">RealPage</span><span class="tg navy">Yardi</span><span class="tg navy">Entrata</span><span class="tg navy">Funnel</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- â"€â"€ PROACTIVE TOOLS â"€â"€ -->
+  <div class="panel" id="panel-proactive">
+    <div class="ib">Rather than waiting for issues to be reported, our team has built five in-house automation tools that continuously monitor, audit, flag, and eliminate problems before they impact the business or our clients.</div>
+    <div class="sl" style="margin-top:16px">In-house automation tools</div>
+
+    <!-- MMCS7000 -->
+    <div class="tool-card" style="border-left:3px solid #1a56db">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <div class="tool-name" style="margin-bottom:0">MMCS7000</div>
+        <span class="tg blue">Cookie Compliance · 4,000+ Sites</span>
+      </div>
+      <div class="tool-tagline" style="margin-bottom:14px">Proactive Website Risk Scanner</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #1a56db">
+          <div style="font-size:10px;font-weight:600;color:#1a56db;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">What it is</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Runs on a scheduled cadence to scan Greystar property websites and identify compliance and tracking risks — including non-essential cookies on each site — so they can be flagged and remediated rather than waiting for reports or audits.</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0F6E56">
+          <div style="font-size:10px;font-weight:600;color:#0F6E56;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Why it's important</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Reduces Greystar and client legal/compliance risk across the full property portfolio. Proactive identification means issues are addressed before they create liability or tenant-facing problems.</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0C2340">
+          <div style="font-size:10px;font-weight:600;color:#0C2340;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">How it will be managed</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Scheduled to run via GCP and logs results into a Looker Studio dashboard managed by our India resources. India team works directly with web vendors for remediation.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 10px">
+        <div style="background:#ECFDF5;border:1px solid #6ee7b7;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
+          <div style="font-size:18px;font-weight:700;color:#065f46;line-height:1.1">$1.7M</div>
+          <div style="font-size:10px;font-weight:600;color:#047857;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">Software cost eliminated</div>
+        </div>
+        <div style="background:#ECFDF5;border:1px solid #6ee7b7;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
+          <div style="font-size:18px;font-weight:700;color:#065f46;line-height:1.1">$162k</div>
+          <div style="font-size:10px;font-weight:600;color:#047857;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">Myna hours optimized</div>
+        </div>
+      </div>
+      <button class="acc-toggle" onclick="toggleAcc('mmcs')">
+        <span>Before this tool &amp; impact</span><span class="acc-arrow" id="arrow-mmcs">▾</span>
+      </button>
+      <div class="acc-body" id="acc-mmcs">
+        <div class="ba-wrap">
+          <div class="ba-header"><div class="ba-head before">Before</div><div class="ba-head after">After</div></div>
+          <div class="ba-body">
+            <div class="ba-col before">
+              <div class="ba-item"><div class="ba-x">✕</div><div>Cookie compliance only checked on Jonah and non-preferred websites — the rest of the portfolio had no coverage</div></div>
+              <div class="ba-item"><div class="ba-x">✕</div><div>Sites were scanned once at onboarding, then only ~100 random properties per month — leaving thousands unreviewed</div></div>
+              <div class="ba-item"><div class="ba-x">✕</div><div>Non-compliant cookies could remain live indefinitely on the vast majority of the portfolio</div></div>
+            </div>
+            <div class="ba-col after">
+              <div class="ba-item"><div class="ba-check">✓</div><div>MMCS7000 scans all properties on a scheduled cadence — full portfolio coverage every run</div></div>
+              <div class="ba-item"><div class="ba-check">✓</div><div>Non-compliant cookies flagged immediately and routed through Looker Studio for India team remediation</div></div>
+              <div class="ba-item"><div class="ba-check">✓</div><div>Dramatically reduces legal and compliance risk across Greystar and client portfolios</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GTM API IMPLEMENTATION -->
+    <div class="tool-card" style="border-left:3px solid #dc2626">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <div class="tool-name" style="margin-bottom:0">GTM API Implementation</div>
+        <span class="tg red">GTM API · Bulk Container Updates</span>
+      </div>
+      <div class="tool-tagline" style="margin-bottom:14px">Bulk Container Management Engine</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #dc2626">
+          <div style="font-size:10px;font-weight:600;color:#dc2626;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">What it is</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Utilizes the GTM API to push bulk updates across all GTM containers simultaneously — deploying 70+ tags, 30+ variables, and multiple triggers in a single run without touching each container individually.</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0F6E56">
+          <div style="font-size:10px;font-weight:600;color:#0F6E56;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Why it's important</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Deploying 70+ tags, 30+ variables, and triggers across hundreds of containers manually would take days of repetitive work. The API completes it in a single run — saving countless hours and eliminating the risk of inconsistency across properties.</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0C2340">
+          <div style="font-size:10px;font-weight:600;color:#0C2340;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">How it will be managed</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Digital Analytics team owns development, testing, and implementation. Given the direct impact on data collection across the full portfolio, senior DA oversight is required before any deployment runs.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 10px">
+        <div style="background:#ECFDF5;border:1px solid #6ee7b7;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
+          <div style="font-size:18px;font-weight:700;color:#065f46;line-height:1.1">$127k&#8211;$170k</div>
+          <div style="font-size:10px;font-weight:600;color:#047857;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">Consultation spend avoided</div>
+        </div>
+        <div style="background:#ECFDF5;border:1px solid #6ee7b7;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
+          <div style="font-size:18px;font-weight:700;color:#065f46;line-height:1.1">$20k&#8211;$30k/yr</div>
+          <div style="font-size:10px;font-weight:600;color:#047857;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">sGTM infrastructure cost avoided</div>
+        </div>
+      </div>
+      <button class="acc-toggle" onclick="toggleAcc('gtmapi')">
+        <span>Before this tool &amp; impact</span><span class="acc-arrow" id="arrow-gtmapi">▾</span>
+      </button>
+      <div class="acc-body" id="acc-gtmapi">
+        <div class="ba-wrap">
+          <div class="ba-header"><div class="ba-head before">Before</div><div class="ba-head after">After</div></div>
+          <div class="ba-body">
+            <div class="ba-col before">
+              <div class="ba-item"><div class="ba-x">✕</div><div>Every GTM container updated manually — 70+ tags and 30+ variables deployed one container at a time</div></div>
+              <div class="ba-item"><div class="ba-x">✕</div><div>Portfolio-wide tag deployments required multi-day implementation efforts</div></div>
+              <div class="ba-item"><div class="ba-x">✕</div><div>High risk of inconsistency and human error when replicating changes across hundreds of containers</div></div>
+            </div>
+            <div class="ba-col after">
+              <div class="ba-item"><div class="ba-check">✓</div><div>GTM API deploys 70+ tags, 30+ variables, and multiple triggers across all containers in a single automated run</div></div>
+              <div class="ba-item"><div class="ba-check">✓</div><div>What previously took days of manual work now completes in hours — freeing DA capacity for higher-value projects</div></div>
+              <div class="ba-item"><div class="ba-check">✓</div><div>Consistent, error-free deployment guaranteed across every container — no copy-paste risk</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>    <!-- watchDAWG -->
+    <div class="tool-card" style="border-left:3px solid #b45309">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <div class="tool-name" style="margin-bottom:0">watchDAWG</div>
+        <span class="tg amb">GTM Placement · Cookie Settings · 4,000+ Sites</span>
+      </div>
+      <div class="tool-tagline" style="margin-bottom:14px">GTM &amp; Cookie Placement Crawler</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #b45309">
+          <div style="font-size:10px;font-weight:600;color:#b45309;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">What it is</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Continuously crawls Greystar property websites to verify correct GTM placement and cookie consent settings — ensuring tracking infrastructure is properly deployed across the full portfolio.</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0F6E56">
+          <div style="font-size:10px;font-weight:600;color:#0F6E56;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Why it's important</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Eliminates manual spot-checking across 4,000+ sites — every property is monitored continuously, ensuring nothing slips through between audit cycles.</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0C2340">
+          <div style="font-size:10px;font-weight:600;color:#0C2340;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">How it will be managed</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Runs on a cadence and automatically pushes tickets into Wrike for India resources to complete.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 10px">
+        <div style="background:#ECFDF5;border:1px solid #6ee7b7;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
+          <div style="font-size:18px;font-weight:700;color:#065f46;line-height:1.1">$12.8k</div>
+          <div style="font-size:10px;font-weight:600;color:#047857;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">Software cost eliminated</div>
+        </div>
+      </div>
+      <button class="acc-toggle" onclick="toggleAcc('watchdawg')">
+        <span>Before this tool &amp; impact</span><span class="acc-arrow" id="arrow-watchdawg">▾</span>
+      </button>
+      <div class="acc-body" id="acc-watchdawg">
+        <div class="ba-wrap">
+          <div class="ba-header"><div class="ba-head before">Before</div><div class="ba-head after">After</div></div>
+          <div class="ba-body">
+            <div class="ba-col before">
+              <div class="ba-item"><div class="ba-x">✕</div><div>GTM placement and cookie settings verified manually through periodic spot-checks — only a small subset of properties reviewed at once</div></div>
+              <div class="ba-item"><div class="ba-x">✕</div><div>Gaps between checks left properties unmonitored for days or weeks</div></div>
+              <div class="ba-item"><div class="ba-x">✕</div><div>High manual effort required just to maintain basic deployment visibility</div></div>
+            </div>
+            <div class="ba-col after">
+              <div class="ba-item"><div class="ba-check">✓</div><div>watchDAWG crawls all 4,000+ sites on a cadence and flags placement issues automatically</div></div>
+              <div class="ba-item"><div class="ba-check">✓</div><div>No gaps — every property is checked on every run</div></div>
+              <div class="ba-item"><div class="ba-check">✓</div><div>Wrike tickets auto-created for India team to resolve without manual triage</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXCEPTION TRIGGER -->
+    <div class="tool-card" style="border-left:3px solid #7c3aed">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <div class="tool-name" style="margin-bottom:0">Exception Trigger</div>
+        <span class="tg" style="background:#F5F3FF;color:#6d28d9;border-color:#ddd6fe">GTM Audit · All Containers</span>
+      </div>
+      <div class="tool-tagline" style="margin-bottom:14px">GTM Container Audit Engine</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #7c3aed">
+          <div style="font-size:10px;font-weight:600;color:#7c3aed;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">What it is</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Proactively audits all GTM containers to detect exception triggers that could allow unauthorized or broken tags to fire on live property websites — before they reach visitors.</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0F6E56">
+          <div style="font-size:10px;font-weight:600;color:#0F6E56;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Why it's important</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Allows us to make vendor tags compliant before they are placed on the site — preventing unauthorized tag exposure to website users and protecting data integrity.</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0C2340">
+          <div style="font-size:10px;font-weight:600;color:#0C2340;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">How it will be managed</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Automation runs on a cadence and automatically pushes tickets into Wrike for resolution by the India team.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 10px">
+        <div style="background:#F5F3FF;border:1px solid #c4b5fd;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
+          <div style="font-size:13px;font-weight:700;color:#4c1d95;line-height:1.35">Risk Reduction</div>
+          <div style="font-size:10px;font-weight:600;color:#6d28d9;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">Unauthorized tag exposure prevented</div>
+        </div>
+        <div style="background:#F5F3FF;border:1px solid #c4b5fd;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
+          <div style="font-size:13px;font-weight:700;color:#4c1d95;line-height:1.35">Data Integrity</div>
+          <div style="font-size:10px;font-weight:600;color:#6d28d9;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">Compliant tags before deployment</div>
+        </div>
+      </div>
+      <button class="acc-toggle" onclick="toggleAcc('exception')">
+        <span>Before this tool &amp; impact</span><span class="acc-arrow" id="arrow-exception">▾</span>
+      </button>
+      <div class="acc-body" id="acc-exception">
+        <div class="ba-wrap">
+          <div class="ba-header"><div class="ba-head before">Before</div><div class="ba-head after">After</div></div>
+          <div class="ba-body">
+            <div class="ba-col before">
+              <div class="ba-item"><div class="ba-x">✕</div><div>GTM containers reviewed manually — exception triggers often went undetected until a vendor tag caused a live issue</div></div>
+              <div class="ba-item"><div class="ba-x">✕</div><div>Unauthorized or misconfigured tags could fire on visitor-facing pages before anyone noticed</div></div>
+              <div class="ba-item"><div class="ba-x">✕</div><div>No systematic way to ensure vendor tags were compliant before deployment</div></div>
+            </div>
+            <div class="ba-col after">
+              <div class="ba-item"><div class="ba-check">✓</div><div>Exception Trigger audits all GTM containers on a cadence — issues caught before they reach live properties</div></div>
+              <div class="ba-item"><div class="ba-check">✓</div><div>Vendor tags reviewed for compliance proactively, not reactively after a problem surfaces</div></div>
+              <div class="ba-item"><div class="ba-check">✓</div><div>Wrike tickets auto-created and routed to India team for immediate resolution</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GA4 FLATLINE -->
+    <div class="tool-card" style="border-left:3px solid #0F6E56">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <div class="tool-name" style="margin-bottom:0">GA4 Flatline</div>
+        <span class="tg teal">GA4 Monitoring · Pre-Ticket Detection</span>
+      </div>
+      <div class="tool-tagline" style="margin-bottom:14px">Tracking Health Monitor</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0F6E56">
+          <div style="font-size:10px;font-weight:600;color:#0F6E56;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">What it is</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Proactively identifies GA4 tracking failures — flatlined sessions, missing events, or dead implementations — before stakeholders notice or tickets are submitted.</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0F6E56">
+          <div style="font-size:10px;font-weight:600;color:#0F6E56;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Why it's important</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Catches tracking failures before paid media runs against broken attribution — saving budget and preventing bad data from influencing marketing decisions.</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0C2340">
+          <div style="font-size:10px;font-weight:600;color:#0C2340;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">How it will be managed</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Runs on a cadence and automatically pushes Wrike tickets for resolution — same model as Exception Trigger.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 10px">
+        <div style="background:#EFF6FF;border:1px solid #93c5fd;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
+          <div style="font-size:13px;font-weight:700;color:#1e3a8a;line-height:1.35">Media Budget Protected</div>
+          <div style="font-size:10px;font-weight:600;color:#1d4ed8;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">No spend against broken tracking</div>
+        </div>
+        <div style="background:#EFF6FF;border:1px solid #93c5fd;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
+          <div style="font-size:13px;font-weight:700;color:#1e3a8a;line-height:1.35">Paid Media Accuracy</div>
+          <div style="font-size:10px;font-weight:600;color:#1d4ed8;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">Attribution data protected pre-campaign</div>
+        </div>
+      </div>
+      <button class="acc-toggle" onclick="toggleAcc('ga4')">
+        <span>Before this tool &amp; impact</span><span class="acc-arrow" id="arrow-ga4">▾</span>
+      </button>
+      <div class="acc-body" id="acc-ga4">
+        <div class="ba-wrap">
+          <div class="ba-header"><div class="ba-head before">Before</div><div class="ba-head after">After</div></div>
+          <div class="ba-body">
+            <div class="ba-col before">
+              <div class="ba-item"><div class="ba-x">✕</div><div>GA4 tracking failures only discovered when a stakeholder noticed a drop in reports or submitted a ticket</div></div>
+              <div class="ba-item"><div class="ba-x">✕</div><div>Paid media could run against broken attribution for days — wasting budget with no visibility</div></div>
+              <div class="ba-item"><div class="ba-x">✕</div><div>Bad data influenced marketing decisions before the problem was identified and fixed</div></div>
+            </div>
+            <div class="ba-col after">
+              <div class="ba-item"><div class="ba-check">✓</div><div>GA4 Flatline detects flatlined sessions and missing events on a cadence — before stakeholders or paid media are impacted</div></div>
+              <div class="ba-item"><div class="ba-check">✓</div><div>Media spend is protected — tracking issues flagged and routed for resolution before campaigns run against bad data</div></div>
+              <div class="ba-item"><div class="ba-check">✓</div><div>Wrike tickets auto-pushed to India team for fast turnaround on any identified failures</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <!-- â"€â"€ PERFORMANCE â"€â"€ -->
+  <div class="panel" id="panel-performance">
+    <div class="subnav">
+      <button class="snb active" onclick="switchSub('performance','ytd')">YTD Output</button>
+      <button class="snb" onclick="switchSub('performance','teams')">By Team</button>
+      <button class="snb" onclick="switchSub('performance','velocity')">Sprint Velocity</button>
+      <button class="snb" onclick="switchSub('performance','reqtype')">By Request Type</button>
+      
+    </div>
+
+    <!-- YTD OUTPUT -->
+    <div class="sub-panel active" id="performance-ytd">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <div id="perf-infobar" class="ib" style="margin-bottom:0;flex:1;min-width:200px">Jan 1 – May 15, 2026 · Live from Wrike API · 171 folders scanned across the Analytics &amp; Performance space · 10 team members tracked.</div>
+        <div style="display:flex;gap:6px;flex-shrink:0">
+          <button class="yr-btn" data-yr="2025" onclick="switchYear(2025)">2025</button>
+          <button class="yr-btn active" data-yr="2026" onclick="switchYear(2026)">2026 YTD</button>
+        </div>
+      </div>
+
+      <!-- Top stats -->
+      <div class="grid3" style="margin-bottom:20px;margin-top:16px">
+        <div class="stat-card">
+          <div class="stat-num" id="counter-total">0</div>
+          <div class="stat-lbl" id="lbl-total">Total Tasks Completed YTD</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" style="color:#0F6E56" id="counter-india">0</div>
+          <div class="stat-lbl" id="lbl-india">India Team Tasks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" style="color:#1a56db" id="counter-da">0</div>
+          <div class="stat-lbl">Digital Analytics Tasks</div>
+        </div>
+      </div>
+
+      <!-- Charts row -->
+      <div style="display:grid;grid-template-columns:240px 1fr;gap:16px;margin-bottom:20px;align-items:start">
+        <!-- Donut -->
+        <div class="card" style="padding:16px;text-align:center">
+          <div class="sl" style="margin-bottom:12px">Team Distribution</div>
+          <canvas id="donutChart" width="200" height="200" style="max-width:200px;margin:0 auto;display:block"></canvas>
+          <div id="donut-legend" style="margin-top:12px;display:flex;flex-direction:column;gap:6px"></div>
+        </div>
+        <!-- Monthly bar chart -->
+        <div class="card" style="padding:16px">
+          <div id="monthly-chart-title" class="sl" style="margin-bottom:12px">Monthly Task Completion — 2026</div>
+          <canvas id="monthlyChart" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- BY TEAM -->
+    <div class="sub-panel" id="performance-teams">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+        <div style="border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:20px 24px;border-top:3px solid #1a56db">
+          <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Digital Analytics</div>
+          <div style="font-size:36px;font-weight:700;color:#0C2340;line-height:1">5,161</div>
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-top:6px">tickets completed · 36 sprints</div>
+        </div>
+        <div style="border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:20px 24px;border-top:3px solid #0F6E56">
+          <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">India Team</div>
+          <div style="font-size:36px;font-weight:700;color:#0C2340;line-height:1">6,094</div>
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-top:6px">tickets completed · 36 sprints</div>
+        </div>
+        <div style="border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:20px 24px;border-top:3px solid #f59e0b">
+          <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Myna Team</div>
+          <div style="font-size:36px;font-weight:700;color:#0C2340;line-height:1">187</div>
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-top:6px">tickets completed · 36 sprints</div>
+        </div>
+      </div>
+
+      <div style="margin-top:28px;padding-top:20px;border-top:1px solid var(--color-border-tertiary)">
+        <div class="sl" style="margin-bottom:14px">Tickets Completed Per Sprint — By Person</div>
+        <div style="position:relative;height:340px">
+          <canvas id="teamTrendChart"></canvas>
+        </div>
+      </div></div>
+    <!-- SPRINT VELOCITY (C) -->
+    <div class="sub-panel" id="performance-velocity">
+      <div class="ib">Tasks completed per 2-week sprint · Jan 2025 – May 2026 · 36 sprints · 11,008 total tasks · per-person pull covering all Wrike spaces.</div>
+      <div class="card" style="padding:16px;margin-top:16px">
+        <div class="sl" style="margin-bottom:14px">Sprint Velocity — Total Tasks Completed Per Sprint</div>
+        <canvas id="velocityChart" height="180"></canvas>
+      </div>
+    </div>
+
+    <!-- BY REQUEST TYPE (B) -->
+    <div class="sub-panel" id="performance-reqtype">
+      <div class="ib">Completed tasks stacked by DA Request Type per sprint · shows what type of work the team is delivering over time.</div>
+      <div class="card" style="padding:16px;margin-top:16px">
+        <div class="sl" style="margin-bottom:14px">By Request Type — Stacked Per Sprint</div>
+        <canvas id="reqtypeChart" height="200"></canvas>
+      </div>
+    </div>
+<!-- WORK MIX (D) -->
+    
+
+</div><!-- end .app -->
+
+<script>
+let donutChart, monthlyChart, chartsInit = false, activeYear = 2026;
+let teamChart=null, velocityChart=null, reqtypeChart=null;
+
+/* â"€â"€ SPRINT DATA (live from Wrike API · 2025–2026) â"€â"€ */
+const SD = {
+  labels: ["25.01","25.02","25.03","25.04","25.05","25.06","25.07","25.08","25.09","25.10","25.11","25.12","25.13","25.14","25.15","25.16","25.17","25.18","25.19","25.20","25.21","25.22","25.23","25.24","25.25","25.26","26.01","26.02","26.03","26.04","26.05","26.06","26.07","26.08","26.09","26.10"],
+  totals: [215,70,236,306,233,319,258,279,268,227,201,253,218,186,234,338,295,244,311,305,315,374,385,347,391,235,235,306,335,666,507,582,294,404,313,323],
+  byType: {
+    "GA/GSC/GTM Access":    [74,9,72,99,65,104,81,53,81,80,53,109,41,75,59,129,44,109,76,99,127,81,104,76,87,68,47,56,108,76,58,162,68,136,113,119],
+    "Event Tracking Setup": [39,32,25,29,24,34,39,34,14,22,25,21,34,16,26,57,35,22,61,10,40,46,53,25,30,14,102,100,109,160,129,171,99,129,101,67],
+    "Publish Tags":         [48,8,60,72,64,58,41,65,58,34,40,34,41,23,57,32,31,34,52,47,19,66,48,69,50,13,16,30,51,27,45,83,30,46,40,25],
+    "Data Troubleshoot":    [26,9,19,41,31,42,30,31,20,18,14,22,21,19,15,30,40,31,37,31,34,50,72,59,83,40,27,81,26,93,19,73,24,35,29,38],
+    "Cookie Compliance":    [2,7,18,8,12,12,9,2,8,4,5,1,9,3,7,3,4,9,5,20,2,9,19,4,8,5,4,2,6,247,216,38,9,4,4,5],
+    "Offboarding":          [2,0,1,3,3,2,3,1,2,5,1,1,9,2,1,1,1,1,2,3,2,1,2,1,3,2,16,9,19,32,16,17,7,3,7,12],
+    "Dynamic Attribution":  [3,2,1,4,2,1,4,2,0,1,0,2,1,1,0,1,0,0,0,2,3,6,4,3,5,2,1,1,0,0,0,17,24,10,9,3],
+    "AI":                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,3,2,2,1,0,2,0,0,3],
+    "Other":                [5,2,11,8,11,4,8,5,17,7,8,14,9,8,11,12,24,8,11,8,11,31,23,23,9,8,12,20,14,26,21,19,27,26,9,19],
+    "Agency Transition":        [16,1,29,42,21,62,43,86,68,56,55,49,53,39,58,72,115,30,67,85,77,84,60,87,116,83,9,4,0,3,2,2,4,15,1,32]
+  },
+  byCategory: {
+    "GTM/Custom Event Tracking": [29,37,29,22,13,37,17,20,18,20,16,15,13,13,17,54,9,20,58,134,121,197,159,152,202,120,221,292,324,348,283,527,256,373,301,247],
+    "Web Cookie Compliance":     [0,2,2,1,2,1,2,1,2,1,1,1,1,1,1,1,2,1,1,4,1,3,2,2,1,1,1,1,3,143,213,35,5,4,2,3],
+    "Dynamic Attribution":       [1,1,1,3,1,1,2,1,0,2,0,1,1,0,0,0,0,0,0,4,2,3,1,0,0,0,0,0,0,0,1,15,15,4,4,5],
+    "AI":                        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,2,2,3,3,0,3,0,0,3],
+    "BigQuery":                  [4,0,1,2,1,2,2,1,2,2,1,1,1,1,1,3,1,1,1,4,6,4,4,4,3,1,3,2,3,3,2,0,1,0,0,4],
+    "Other":                     [2,0,0,1,2,0,0,0,1,1,1,4,0,2,0,2,1,1,1,4,8,10,10,6,3,5,4,4,2,2,3,0,7,5,2,5],
+    "Agency Transition":             [179,30,203,277,214,278,235,256,245,201,182,231,202,169,215,277,281,221,250,155,177,157,209,183,182,108,5,5,1,167,2,5,7,18,4,56]
+  },
+  typeTotals: {"GA/GSC/GTM Access":2998, "Event Tracking Setup":1974, "Publish Tags":1557, "Data Troubleshoot":1310, "Cookie Compliance":730, "Offboarding":193, "Dynamic Attribution":115, "AI":16, "Other":489, "Agency Transition":1626},
+  catTotals: {"GTM/Custom Event Tracking":4714, "Agency Transition":5587, "Web Cookie Compliance":448, "BigQuery":72, "Other":99, "Dynamic Attribution":69, "AI":19}
+};
+
+const TEAM = {
+  labels: ["25.01","25.02","25.03","25.04","25.05","25.06","25.07","25.08","25.09","25.10","25.11","25.12","25.13","25.14","25.15","25.16","25.17","25.18","25.19","25.20","25.21","25.22","25.23","25.24","25.25","25.26","26.01","26.02","26.03","26.04","26.05","26.06","26.07","26.08","26.09","26.10"],
+  DA:    [137,61,138,172,142,184,193,146,125,136,100,128,119,102,108,199,161,157,123,157,150,218,181,174,202,111,160,202,142,242,66,168,81,128,66,82],
+  India: [81,11,107,143,97,144,75,136,155,98,108,131,105,88,137,154,147,110,184,167,165,169,217,186,170,77,80,120,205,435,448,434,202,299,260,249],
+  Myna:  [4,5,1,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,14,7,8,9,9,5,10,3,7,1,0,4,5,30,28,16,8,11]
+};
+
+const SPRINT_COLORS = {
+  "GA/GSC/GTM Access":    "#1a56db",
+  "Event Tracking Setup": "#059669",
+  "Publish Tags":         "#7c3aed",
+  "Data Troubleshoot":    "#d97706",
+  "Cookie Compliance":    "#0F6E56",
+  "Offboarding":          "#ef4444",
+  "Dynamic Attribution":  "#f59e0b",
+  "AI":                   "#0ea5e9",
+  "Other":                "#6b7280",
+  "Agency Transition":        "#e5e7eb"
+};
+
+function initSprintCharts(sub) {
+  const chartOpts = {
+    bar: {
+      plugins:{ legend:{ position:'bottom', labels:{ boxWidth:10, padding:12, font:{ size:11 }}}},
+      scales:{
+        x:{ stacked:true, grid:{ display:false }, ticks:{ font:{ size:10 }, maxRotation:45 }},
+        y:{ stacked:true, grid:{ color:'#f0f0f0' }, ticks:{ font:{ size:11 }}}
+      },
+      animation:{ duration:700, easing:'easeInOutQuart' }
+    },
+    hbar: {
+      indexAxis:'y',
+      plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: c => ` ${c.parsed.x.toLocaleString()} tasks` }}},
+      scales:{
+        x:{ grid:{ color:'#f0f0f0' }, ticks:{ font:{ size:10 }}},
+        y:{ grid:{ display:false }, ticks:{ font:{ size:10 }}}
+      },
+      animation:{ duration:700, easing:'easeInOutQuart' }
+    }
+  };
+
+  if (sub === 'velocity' && !velocityChart) {
+    velocityChart = new Chart(document.getElementById('velocityChart'), {
+      type:'bar',
+      data:{
+        labels: SD.labels,
+        datasets:[{ label:'Tasks', data:SD.totals, backgroundColor:'#1a56db', borderRadius:3,
+          hoverBackgroundColor:'#0C2340' }]
+      },
+      options:{
+        plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: c => ` ${c.parsed.y} tasks` }}},
+        scales:{
+          x:{ grid:{ display:false }, ticks:{ font:{ size:10 }, maxRotation:45 }},
+          y:{ grid:{ color:'#f0f0f0' }, ticks:{ font:{ size:11 }}}
+        },
+        animation:{ duration:700, easing:'easeInOutQuart' }
+      }
+    });
+  }
+
+  if (sub === 'reqtype' && !reqtypeChart) {
+    const typeKeys = ["GA/GSC/GTM Access","Event Tracking Setup","Publish Tags","Data Troubleshoot","Cookie Compliance","Offboarding","Dynamic Attribution","AI","Other","Agency Transition"];
+    reqtypeChart = new Chart(document.getElementById('reqtypeChart'), {
+      type:'bar',
+      data:{
+        labels: SD.labels,
+        datasets: typeKeys.map(k => ({
+          label:k, data:SD.byType[k], backgroundColor:SPRINT_COLORS[k],
+          borderRadius:2, stack:'s'
+        }))
+      },
+      options: chartOpts.bar
+    });
+  }
+
+
+  if (sub === 'teams' && !teamChart) {
+    const teamSeries = [
+      { label:'Digital Analytics', data: TEAM.DA,    color:'#1a56db' },
+      { label:'India Team',        data: TEAM.India,  color:'#0F6E56' },
+      { label:'Myna Team',         data: TEAM.Myna,   color:'#f59e0b' }
+    ];
+    teamChart = new Chart(document.getElementById('teamTrendChart'), {
+      type: 'line',
+      data: {
+        labels: TEAM.labels,
+        datasets: teamSeries.map(s => ({
+          label: s.label,
+          data: s.data,
+          borderColor: s.color,
+          backgroundColor: s.color + '18',
+          borderWidth: 2,
+          pointRadius: 2.5,
+          pointHoverRadius: 5,
+          tension: 0.3,
+          fill: false
+        }))
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 10, padding: 14, font: { size: 11 }}},
+          tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y} tasks` }}
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 45 }},
+          y: { grid: { color: '#f0f0f0' }, ticks: { font: { size: 11 }}, beginAtZero: true }
+        },
+        animation: { duration: 700, easing: 'easeInOutQuart' }
+      }
+    });
+  }
+}
+
+const yearData = {
+  2025: {
+    info: 'Full Year 2025 · Live from Wrike API · Per-person pull across all Wrike spaces · All three teams active.',
+    counters: { total:7263, india:3362, da:3824 },
+    lblTotal: 'Total Tasks — Full Year 2025',
+    lblIndia: 'India Team Tasks',
+    donutData: [3362, 3824, 77],
+    legend: [
+      { color:'#0F6E56', label:'India', val:'3,362 · 46%' },
+      { color:'#1a56db', label:'Digital Analytics', val:'3,824 · 53%' },
+      { color:'#f59e0b', label:'Myna', val:'77 · 1%' }
+    ],
+    barTitle: 'Monthly Task Completion — Full Year 2025',
+    barLabels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    barDA:    [198,310,326,464,236,247,210,360,437,368,355,313],
+    barIndia: [92,250,241,366,206,236,225,301,461,334,403,247],
+    barMyna:  [9,1,1,0,0,0,1,0,21,17,14,13]
+  },
+  2026: {
+    info: 'Jan 1 – May 2026 · Sprint-labeled tasks · Sprints 26.01–26.10 · All three teams active.',
+    counters: { total:4179, india:2732, da:1337 },
+    lblTotal: 'Total Tasks Completed YTD',
+    lblIndia: 'India Team Tasks',
+    donutData: [2732, 1337, 110],
+    legend: [
+      { color:'#0F6E56', label:'India', val:'2,732 · 65%' },
+      { color:'#1a56db', label:'Digital Analytics', val:'1,337 · 32%' },
+      { color:'#f59e0b', label:'Myna', val:'110 · 3%' }
+    ],
+    barTitle: 'Monthly Task Completion — 2026',
+    barLabels: ['Jan','Feb','Mar','Apr','May'],
+    barDA:    [362,384,234,209,148],
+    barIndia: [200,640,882,501,509],
+    barMyna:  [8,4,35,44,19]
+  }
+};
+
+function switchYear(yr){
+  activeYear = yr;
+  document.querySelectorAll('.yr-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.yr-btn[data-yr="${yr}"]`).classList.add('active');
+  const d = yearData[yr];
+  document.getElementById('perf-infobar').textContent = d.info;
+  document.getElementById('lbl-total').textContent = d.lblTotal;
+  document.getElementById('lbl-india').textContent = d.lblIndia;
+  document.getElementById('monthly-chart-title').textContent = d.barTitle;
+  animateCounters(yr);
+  if(donutChart){
+    donutChart.data.datasets[0].data = d.donutData;
+    donutChart.update();
+  }
+  document.getElementById('donut-legend').innerHTML = d.legend.map(l=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;font-size:11px">
+      <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:2px;background:${l.color};flex-shrink:0"></div><span style="color:var(--color-text-secondary)">${l.label}</span></div>
+      <span style="font-weight:600;color:#0C2340">${l.val}</span>
+    </div>`).join('');
+  if(monthlyChart){
+    monthlyChart.data.labels = d.barLabels;
+    monthlyChart.data.datasets[0].data = d.barDA;
+    monthlyChart.data.datasets[1].data = d.barIndia;
+    monthlyChart.data.datasets[2].data = d.barMyna;
+    monthlyChart.update();
+  }
+}
+
+function toggleAcc(id){
+  const body=document.getElementById('acc-'+id);
+  const arrow=document.getElementById('arrow-'+id);
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+function switchTab(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  document.querySelectorAll('.nb').forEach(b=>{
+    if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+name+"'"))b.classList.add('active');
+  });
+  if(name==='performance'){ animateBars(); initCharts(); animateCounters(activeYear); }
+}
+
+function switchSub(tab,sub){
+  const panel=document.getElementById('panel-'+tab);
+  panel.querySelectorAll('.sub-panel').forEach(p=>p.classList.remove('active'));
+  panel.querySelectorAll('.snb').forEach(b=>b.classList.remove('active'));
+  document.getElementById(tab+'-'+sub).classList.add('active');
+  panel.querySelectorAll('.snb').forEach(b=>{
+    if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+sub+"'"))b.classList.add('active');
+  });
+  if(tab==='performance'){
+    animateBars();
+    if(sub==='ytd'){ initCharts(); animateCounters(activeYear); }
+    else if(['velocity','reqtype','teams'].includes(sub)){ initSprintCharts(sub); }
+  }
+}
+
+function animateBars(){
+  document.querySelectorAll('.perf-bar[data-width]').forEach(bar=>{
+    setTimeout(()=>{ bar.style.width = bar.dataset.width + '%'; }, 150);
+  });
+}
+
+function animateCounters(yr){
+  const yd = yearData[yr || activeYear];
+  const targets = { 'counter-total': yd.counters.total, 'counter-india': yd.counters.india, 'counter-da': yd.counters.da };
+  Object.entries(targets).forEach(([id, target]) => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    let start = 0, duration = 1200, startTime = null;
+    function step(ts){
+      if(!startTime) startTime = ts;
+      const progress = Math.min((ts - startTime) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(ease * target).toLocaleString();
+      if(progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+function initCharts(){
+  if(chartsInit) return;
+  chartsInit = true;
+
+  // Donut
+  const dCtx = document.getElementById('donutChart');
+  if(dCtx) {
+    donutChart = new Chart(dCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['India', 'Digital Analytics', 'Myna'],
+        datasets:[{ data:[2752,1382,147], backgroundColor:['#0F6E56','#1a56db','#f59e0b'], borderWidth:0, hoverOffset:6 }]
+      },
+      options:{
+        cutout:'68%', plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: ctx => ` ${ctx.label}: ${ctx.parsed.toLocaleString()} tasks` }}},
+        animation:{ duration:1000, easing:'easeInOutQuart' }
+      }
+    });
+  }
+
+  // Monthly bar
+  const mCtx = document.getElementById('monthlyChart');
+  if(mCtx) {
+    monthlyChart = new Chart(mCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan','Feb','Mar','Apr','May (Â½)'],
+        datasets:[
+          { label:'Digital Analytics', data:[148,162,175,196,152], backgroundColor:'#1a56db', borderRadius:4, stack:'s' },
+          { label:'India',             data:[180,195,210,220,191], backgroundColor:'#0F6E56', borderRadius:4, stack:'s' },
+          { label:'Myna',              data:[52,73,65,65,119],     backgroundColor:'#f59e0b', borderRadius:4, stack:'s' },
+        ]
+      },
+      options:{
+        plugins:{ legend:{ position:'bottom', labels:{ boxWidth:10, padding:14, font:{ size:11 }}}},
+        scales:{
+          x:{ stacked:true, grid:{ display:false }, ticks:{ font:{ size:11 }}},
+          y:{ stacked:true, grid:{ color:'#f0f0f0' }, ticks:{ font:{ size:11 }}}
+        },
+        animation:{ duration:900, easing:'easeInOutQuart' }
+      }
+    });
+  switchYear(activeYear || 2026);
+  }
+}
+</script>
+</body>
+</html>
+
+
