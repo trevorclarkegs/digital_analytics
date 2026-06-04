@@ -247,7 +247,9 @@ body{font-family:var(--font-sans);background:#f0f2f5;display:flex;justify-conten
   <!-- â"€â"€ POSITIONS â"€â"€ -->
   <div class="panel" id="panel-positions">
     <div class="subnav">
-      <button class="snb active" onclick="switchSub('positions','roles')">Proposed Roles</button>
+      <button class="snb active" onclick="switchSub('positions','roles')">Current Draft</button>
+      <button class="snb" onclick="switchSub('positions','optA')">Option A &mdash; Charter</button>
+      <button class="snb" onclick="switchSub('positions','optD')">Option D &mdash; Before &rarr; After</button>
       <button class="snb" onclick="switchSub('positions','org')">Org Structure</button>
     </div>
 
@@ -337,6 +339,182 @@ body{font-family:var(--font-sans);background:#f0f2f5;display:flex;justify-conten
             <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5">Cross-domain tracking accuracy, XDTID integrity, and attribution audit status per property</div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- OPTION A — CHARTER FIRST                              -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="sub-panel" id="positions-optA">
+
+      <!-- Charter header -->
+      <div style="background:#0a2245;color:white;padding:22px 24px;border-radius:10px;border-top:3px solid #008cfa;margin-bottom:18px">
+        <div style="font-size:10px;letter-spacing:1.5px;color:#008cfa;text-transform:uppercase;margin-bottom:6px">Team Charter &mdash; Defined by Leadership</div>
+        <div style="font-size:18px;font-weight:600;margin-bottom:8px">Digital Leasing Product &amp; Ops Team</div>
+        <div style="font-size:13px;color:#b8b9be;line-height:1.6">Owns property website performance and the testing, measurement, tagging, and reliability infrastructure surrounding the broader leasing funnel &mdash; greystar.com, international websites, property websites, and online leasing portals.</div>
+      </div>
+
+      <!-- Two pillars -->
+      <div class="sl">Two pillars of ownership</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px">
+
+        <div style="border:1px solid #dbeafe;border-radius:10px;padding:20px;border-top:3px solid #0077d4">
+          <div style="font-size:10px;letter-spacing:1.4px;color:#0077d4;text-transform:uppercase;margin-bottom:8px">&#9642; Pillar 01 &middot; Product</div>
+          <div style="font-size:17px;font-weight:600;color:#0C2340;margin-bottom:8px">Property Website Product</div>
+          <div style="font-size:13px;color:#4c4d51;line-height:1.55;margin-bottom:14px">With <code style="font-family:monospace;font-size:11.5px;color:#0a2245;background:#f0f1f2;padding:1px 5px;border-radius:3px">greystar.js</code> now deployed across the portfolio, the team can measure, test, and systematically improve these sites for the first time.</div>
+          <div style="display:flex;gap:24px;padding:10px 0;border-top:1px solid #f0f1f2;border-bottom:1px solid #f0f1f2;margin-bottom:14px">
+            <div><div style="font-size:20px;font-weight:700;color:#0C2340">$150M</div><div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#64666b;margin-top:2px">Annual Mktg Spend</div></div>
+            <div><div style="font-size:20px;font-weight:700;color:#0C2340">~4,000</div><div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#64666b;margin-top:2px">Property Websites</div></div>
+          </div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Deploy and maintain GTM and greystar.js across the full property website portfolio</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Partner with marketing and website vendors to design, build, and run experiments</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Measure and improve engagement, lead capture, and downstream lease contribution</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Set the roadmap and prioritization framework for property website investment</div></div>
+        </div>
+
+        <div style="border:1px solid #ffe4de;border-radius:10px;padding:20px;border-top:3px solid #f5684d">
+          <div style="font-size:10px;letter-spacing:1.4px;color:#f5684d;text-transform:uppercase;margin-bottom:8px">&#9642; Pillar 02 &middot; Reliability</div>
+          <div style="font-size:17px;font-weight:600;color:#0C2340;margin-bottom:8px">Leasing DevOps</div>
+          <div style="font-size:13px;color:#4c4d51;line-height:1.55;margin-bottom:14px">The reliability and measurement integrity of the full digital leasing funnel are mission-critical systems requiring dedicated operational ownership.</div>
+          <div style="display:flex;gap:24px;padding:10px 0;border-top:1px solid #f0f1f2;border-bottom:1px solid #f0f1f2;margin-bottom:14px">
+            <div><div style="font-size:20px;font-weight:700;color:#0C2340">3</div><div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#64666b;margin-top:2px">Platforms Under Coverage</div></div>
+            <div><div style="font-size:20px;font-weight:700;color:#0C2340">24/7</div><div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#64666b;margin-top:2px">Measurement Integrity</div></div>
+          </div>
+          <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Deploy, test, and monitor measurement and conversion-tracking across the full leasing funnel</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Partner with greystar.com product team on tracking requirements and tag governance</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Proactively detect and resolve broken events, vendor regressions, and data quality issues</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Safeguard cross-platform identity continuity (XDTID) from greystar.com through portals to CRM</div></div>
+        </div>
+
+      </div>
+
+      <!-- Who leads what -->
+      <div class="sl">Who leads what</div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px">
+
+        <div class="pos-card" style="border-left:3px solid #0C2340">
+          <div class="pos-header">
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#0C2340;margin-bottom:2px">Trevor Clarke</div>
+              <div class="pos-title">Director, Digital Analytics</div>
+            </div>
+            <div class="pos-badge tg navy">Both Pillars</div>
+          </div>
+          <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)">Strategy &amp; Oversight</div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Own the analytics roadmap across all properties and corporate sites</div></div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Primary liaison between Digital Analytics, DCOE, and executive stakeholders</div></div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Lead expansion into Canadian properties and new market segments</div></div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Sprint planning, vendor partnerships, and direct management of both Managers</div></div>
+        </div>
+
+        <div class="pos-card" style="border-left:3px solid #0077d4">
+          <div class="pos-header">
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#0C2340;margin-bottom:2px">Destiney Johnson</div>
+              <div class="pos-title">Manager, Digital Analytics</div>
+            </div>
+            <div class="pos-badge" style="background:#dbeafe;color:#0077d4;border:1px solid #bfdbfe;font-size:10px;padding:3px 8px;border-radius:4px;font-weight:500;white-space:nowrap">Pillar 01 &middot; Product</div>
+          </div>
+          <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)">Property Website Product</div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Own event tracking implementation and GTM container QA across all properties</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Drive greystar.js adoption and measurement quality across vendor-built sites</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Push web vendors for enhanced data layer coverage and richer GA4 events</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Manage India resources for event tracking workflows in Wrike</div></div>
+        </div>
+
+        <div class="pos-card" style="border-left:3px solid #f5684d">
+          <div class="pos-header">
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#0C2340;margin-bottom:2px">Christian Myers</div>
+              <div class="pos-title">Manager, Digital Analytics</div>
+            </div>
+            <div class="pos-badge" style="background:#fff0ed;color:#f5684d;border:1px solid #fecdc5;font-size:10px;padding:3px 8px;border-radius:4px;font-weight:500;white-space:nowrap">Pillar 02 &middot; DevOps</div>
+          </div>
+          <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)">Leasing DevOps</div>
+          <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Cookie compliance monitoring across all US properties, greystar.com, and sub-domains</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Deploy and validate conversion-tracking infrastructure across the full leasing funnel</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Proactively detect vendor regressions, broken events, and XDTID continuity issues</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Manage India resources for compliance and devops workflows in Wrike</div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- OPTION D — BEFORE → AFTER                             -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="sub-panel" id="positions-optD">
+
+      <div class="ib" style="margin-bottom:20px">These aren&rsquo;t title changes &mdash; they&rsquo;re scope changes. Here&rsquo;s what each person carries today versus what they&rsquo;ll own with the new structure in place.</div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+
+        <!-- TREVOR -->
+        <div>
+          <div style="background:#f3f4f6;border:1px solid #e5e7eb;border-radius:10px;padding:16px;margin-bottom:6px">
+            <div style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#9ca3af;margin-bottom:10px;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;background:#9ca3af;border-radius:50%;display:inline-block"></span>Today</div>
+            <div style="font-size:13px;font-weight:700;color:#6b7280;margin-bottom:1px">Trevor Clarke</div>
+            <div style="font-size:11px;color:#9ca3af;margin-bottom:12px">Senior Manager, Digital Analytics</div>
+            <div class="pos-item" style="font-size:12px;color:#9ca3af"><div style="width:4px;height:4px;min-width:4px;background:#d1d5db;border-radius:50%;margin-top:5px"></div><div>Manages team operations and day-to-day execution</div></div>
+            <div class="pos-item" style="font-size:12px;color:#9ca3af"><div style="width:4px;height:4px;min-width:4px;background:#d1d5db;border-radius:50%;margin-top:5px"></div><div>Builds automation tools and tracking infrastructure</div></div>
+            <div class="pos-item" style="font-size:12px;color:#9ca3af"><div style="width:4px;height:4px;min-width:4px;background:#d1d5db;border-radius:50%;margin-top:5px"></div><div>No formal management layer below Senior Manager</div></div>
+          </div>
+          <div style="text-align:center;font-size:20px;color:#0C2340;line-height:1;margin:2px 0">&#8595;</div>
+          <div style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;padding:16px;margin-top:6px">
+            <div style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#0C2340;margin-bottom:10px;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;background:#0C2340;border-radius:50%;display:inline-block"></span>Proposed</div>
+            <div style="font-size:13px;font-weight:700;color:#0C2340;margin-bottom:1px">Trevor Clarke</div>
+            <div style="font-size:11px;color:#1a56db;font-weight:600;margin-bottom:12px">Director, Digital Analytics</div>
+            <div class="pos-item" style="font-size:12px"><div class="pos-dot"></div><div>Owns analytics roadmap across 4,000+ properties and corporate sites</div></div>
+            <div class="pos-item" style="font-size:12px"><div class="pos-dot"></div><div>Executive liaison &mdash; DCOE, VP, and vendor relationships</div></div>
+            <div class="pos-item" style="font-size:12px"><div class="pos-dot"></div><div>Leads expansion into Canada &amp; EU markets</div></div>
+            <div class="pos-item" style="font-size:12px"><div class="pos-dot"></div><div>Direct management of Destiney Johnson &amp; Christian Myers</div></div>
+          </div>
+        </div>
+
+        <!-- DESTINEY -->
+        <div>
+          <div style="background:#f3f4f6;border:1px solid #e5e7eb;border-radius:10px;padding:16px;margin-bottom:6px">
+            <div style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#9ca3af;margin-bottom:10px;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;background:#9ca3af;border-radius:50%;display:inline-block"></span>Today</div>
+            <div style="font-size:13px;font-weight:700;color:#6b7280;margin-bottom:1px">Destiney Johnson</div>
+            <div style="font-size:11px;color:#9ca3af;margin-bottom:12px">Senior Analyst, Digital Analytics</div>
+            <div class="pos-item" style="font-size:12px;color:#9ca3af"><div style="width:4px;height:4px;min-width:4px;background:#d1d5db;border-radius:50%;margin-top:5px"></div><div>Event tracking QA and GTM container work</div></div>
+            <div class="pos-item" style="font-size:12px;color:#9ca3af"><div style="width:4px;height:4px;min-width:4px;background:#d1d5db;border-radius:50%;margin-top:5px"></div><div>Wrike intake and sprint task execution</div></div>
+            <div class="pos-item" style="font-size:12px;color:#9ca3af"><div style="width:4px;height:4px;min-width:4px;background:#d1d5db;border-radius:50%;margin-top:5px"></div><div>No formal ownership of India team or roadmap</div></div>
+          </div>
+          <div style="text-align:center;font-size:20px;color:#0F6E56;line-height:1;margin:2px 0">&#8595;</div>
+          <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:16px;margin-top:6px">
+            <div style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#065f46;margin-bottom:10px;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;background:#0F6E56;border-radius:50%;display:inline-block"></span>Proposed</div>
+            <div style="font-size:13px;font-weight:700;color:#0C2340;margin-bottom:1px">Destiney Johnson</div>
+            <div style="font-size:11px;color:#0F6E56;font-weight:600;margin-bottom:12px">Manager, Digital Analytics</div>
+            <div class="pos-item" style="font-size:12px"><div class="pos-dot" style="background:#0F6E56"></div><div>Owns event tracking implementation &amp; GTM QA across all properties</div></div>
+            <div class="pos-item" style="font-size:12px"><div class="pos-dot" style="background:#0F6E56"></div><div>Manages India team for paid media accuracy and channel spend</div></div>
+            <div class="pos-item" style="font-size:12px"><div class="pos-dot" style="background:#0F6E56"></div><div>Controls Wrike intake, sprint planning &amp; backlog grooming</div></div>
+            <div class="pos-item" style="font-size:12px"><div class="pos-dot" style="background:#0F6E56"></div><div>Drives greystar.js adoption and data layer standards with vendors</div></div>
+          </div>
+        </div>
+
+        <!-- CHRISTIAN -->
+        <div>
+          <div style="background:#f3f4f6;border:1px solid #e5e7eb;border-radius:10px;padding:16px;margin-bottom:6px">
+            <div style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#9ca3af;margin-bottom:10px;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;background:#9ca3af;border-radius:50%;display:inline-block"></span>Today</div>
+            <div style="font-size:13px;font-weight:700;color:#6b7280;margin-bottom:1px">Christian Myers</div>
+            <div style="font-size:11px;color:#9ca3af;margin-bottom:12px">Senior Analyst, Digital Analytics</div>
+            <div class="pos-item" style="font-size:12px;color:#9ca3af"><div style="width:4px;height:4px;min-width:4px;background:#d1d5db;border-radius:50%;margin-top:5px"></div><div>Cookie compliance monitoring and GTM implementation</div></div>
+            <div class="pos-item" style="font-size:12px;color:#9ca3af"><div style="width:4px;height:4px;min-width:4px;background:#d1d5db;border-radius:50%;margin-top:5px"></div><div>Automation tool development (watchDAWG, etc.)</div></div>
+            <div class="pos-item" style="font-size:12px;color:#9ca3af"><div style="width:4px;height:4px;min-width:4px;background:#d1d5db;border-radius:50%;margin-top:5px"></div><div>No formal ownership of India team or compliance standards</div></div>
+          </div>
+          <div style="text-align:center;font-size:20px;color:#1a56db;line-height:1;margin:2px 0">&#8595;</div>
+          <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:16px;margin-top:6px">
+            <div style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#1e3a8a;margin-bottom:10px;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;background:#1a56db;border-radius:50%;display:inline-block"></span>Proposed</div>
+            <div style="font-size:13px;font-weight:700;color:#0C2340;margin-bottom:1px">Christian Myers</div>
+            <div style="font-size:11px;color:#1a56db;font-weight:600;margin-bottom:12px">Manager, Digital Analytics</div>
+            <div class="pos-item" style="font-size:12px"><div class="pos-dot" style="background:#1a56db"></div><div>Enforces cookie compliance across all GS properties at scale</div></div>
+            <div class="pos-item" style="font-size:12px"><div class="pos-dot" style="background:#1a56db"></div><div>Manages India team for compliance ops and client data protection</div></div>
+            <div class="pos-item" style="font-size:12px"><div class="pos-dot" style="background:#1a56db"></div><div>Builds and maintains GTM automation tooling</div></div>
+            <div class="pos-item" style="font-size:12px"><div class="pos-dot" style="background:#1a56db"></div><div>Owns leasing devops &mdash; tracking integrity, tag governance, XDTID</div></div>
+          </div>
+        </div>
+
       </div>
     </div>
 
