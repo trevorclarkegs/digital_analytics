@@ -93,6 +93,12 @@ body{font-family:var(--font-sans);background:#f0f2f5;display:flex;justify-conten
 .tg.red{background:#FCEBEB;color:#791F1F}
 .tg.blue{background:#EFF6FF;color:#1e40af}
 
+/* EXPANDED SCOPE CHIP */
+.exp-chip{display:inline-block;font-size:8.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:1px 5px;border-radius:3px;margin-left:6px;white-space:nowrap;vertical-align:middle;position:relative;top:-1px}
+.exp-chip.navy{background:#E6F1FB;color:#0C447C}
+.exp-chip.blue{background:#EFF6FF;color:#1e40af}
+.exp-chip.red{background:#FCEBEB;color:#791F1F}
+
 /* POSITION CARDS */
 .pos-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:16px}
 .pos-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -388,6 +394,7 @@ body{font-family:var(--font-sans);background:#f0f2f5;display:flex;justify-conten
 
       <!-- Who leads what -->
       <div class="sl">Who leads what</div>
+      <div class="ib" style="margin-bottom:14px">Bullets marked <span class="exp-chip navy">Expanded</span> are new or expanded scope beyond each person's current role. Unmarked bullets reflect work they already own today.</div>
       <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px">
 
         <div class="pos-card" style="border-left:3px solid #0C2340">
@@ -400,9 +407,10 @@ body{font-family:var(--font-sans);background:#f0f2f5;display:flex;justify-conten
           <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)">Strategy &amp; Oversight</div>
           <div class="pos-item"><div class="pos-dot"></div><div>Own the analytics roadmap across all properties and corporate sites</div></div>
           <div class="pos-item"><div class="pos-dot"></div><div>Drive greystar.js adoption and measurement quality across vendor-built sites</div></div>
-          <div class="pos-item"><div class="pos-dot"></div><div>Lead data collection expansion into Canadian and European properties</div></div>
-          <div class="pos-item"><div class="pos-dot"></div><div>Sprint planning, vendor partnerships, and direct management of both Managers</div></div>
-          <div class="pos-item"><div class="pos-dot"></div><div>Assist in designing, analyzing, and auditing both product and platform tests across the leasing funnel</div></div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Lead data collection expansion into Canadian and European properties<span class="exp-chip navy">Expanded</span></div></div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Sprint planning and vendor partnerships across both pillars</div></div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Direct management of both Manager-level direct reports<span class="exp-chip navy">Expanded</span></div></div>
+          <div class="pos-item"><div class="pos-dot"></div><div>Assist in designing, analyzing, and auditing both product and platform tests across the leasing funnel<span class="exp-chip navy">Expanded</span></div></div>
         </div>
 
         <div class="pos-card" style="border-left:3px solid #0077d4">
@@ -414,10 +422,10 @@ body{font-family:var(--font-sans);background:#f0f2f5;display:flex;justify-conten
           </div>
           <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)">Property Website Product</div>
           <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Own event tracking implementation and GTM container QA across all properties</div></div>
-          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Push web vendors for enhanced data layer coverage and richer GA4 events</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Push web vendors for enhanced data layer coverage and richer GA4 events<span class="exp-chip blue">Expanded</span></div></div>
           <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Proactively detect vendor regressions, broken events, and XDTID continuity issues</div></div>
-          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Design, analyze, and audit web products across property websites for increased conversion rate</div></div>
-          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Manage India resources for event tracking workflows in Wrike</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Design, analyze, and audit web products across property websites for increased conversion rate<span class="exp-chip blue">Expanded</span></div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#0077d4"></div><div>Manage India resources for event tracking workflows in Wrike<span class="exp-chip blue">Expanded</span></div></div>
         </div>
 
         <div class="pos-card" style="border-left:3px solid #f5684d">
@@ -431,8 +439,8 @@ body{font-family:var(--font-sans);background:#f0f2f5;display:flex;justify-conten
           <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Cookie compliance monitoring across all US properties, greystar.com, and sub-domains</div></div>
           <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Deploy and validate conversion-tracking infrastructure across the full leasing funnel</div></div>
           <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Proactively surface non-compliant cookie placements and consent failures before they create legal or audit exposure</div></div>
-          <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Design, analyze, and audit web platform tests to improve engagement and leasing conversion</div></div>
-          <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Manage India resources for compliance and devops workflows in Wrike</div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Design, analyze, and audit web platform tests to improve engagement and leasing conversion<span class="exp-chip red">Expanded</span></div></div>
+          <div class="pos-item"><div class="pos-dot" style="background:#f5684d"></div><div>Manage India resources for compliance and devops workflows in Wrike<span class="exp-chip red">Expanded</span></div></div>
         </div>
 
       </div>
