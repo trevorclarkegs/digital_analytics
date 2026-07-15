@@ -189,7 +189,7 @@ body{font-family:var(--font-sans);background:#f0f2f5;display:flex;justify-conten
     <div>
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px">
         <div class="topbar-title">Digital Leasing Product &amp; Ops Team</div>
-        <div class="da-badge">May 2026</div>
+        <div class="da-badge" id="da-badge">May 2026</div>
       </div>
       <div class="topbar-sub">Positions · Portfolio · Innovation · Performance</div>
     </div>
@@ -219,7 +219,7 @@ body{font-family:var(--font-sans);background:#f0f2f5;display:flex;justify-conten
         <div class="stat-lbl">Tasks Completed YTD</div>
       </div>
       <div class="stat-card">
-        <div class="stat-num">8</div>
+        <div class="stat-num">7</div>
         <div class="stat-lbl">Proactive Automation Tools</div>
       </div>
     </div>
@@ -686,61 +686,8 @@ body{font-family:var(--font-sans);background:#f0f2f5;display:flex;justify-conten
 
   <!-- â"€â"€ PROACTIVE TOOLS â"€â"€ -->
   <div class="panel" id="panel-proactive">
-    <div class="ib">Rather than waiting for issues to be reported, our team has built eight in-house automation tools that continuously monitor, audit, flag, and eliminate problems before they impact the business or our clients.</div>
+    <div class="ib">Rather than waiting for issues to be reported, our team has built seven in-house automation tools that continuously monitor, audit, flag, and eliminate problems before they impact the business or our clients.</div>
     <div class="sl" style="margin-top:16px">In-house automation tools</div>
-
-    <!-- MMCS7000 -->
-    <div class="tool-card" style="border-left:3px solid #1a56db">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-        <div class="tool-name" style="margin-bottom:0">MMCS7000</div>
-        <span class="tg blue">Cookie Compliance · 4,000+ Sites</span>
-      </div>
-      <div class="tool-tagline" style="margin-bottom:14px">Proactive Website Risk Scanner</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
-        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #1a56db">
-          <div style="font-size:10px;font-weight:600;color:#1a56db;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">What it is</div>
-          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Runs on a scheduled cadence to scan Greystar property websites and identify compliance and tracking risks — including non-essential cookies on each site — so they can be flagged and remediated rather than waiting for reports or audits.</div>
-        </div>
-        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0F6E56">
-          <div style="font-size:10px;font-weight:600;color:#0F6E56;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Why it's important</div>
-          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Reduces Greystar and client legal/compliance risk across the full property portfolio. Proactive identification means issues are addressed before they create liability or tenant-facing problems.</div>
-        </div>
-        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border-top:2px solid #0C2340">
-          <div style="font-size:10px;font-weight:600;color:#0C2340;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">How it will be managed</div>
-          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Scheduled to run via GCP and logs results into a Looker Studio dashboard managed by our India resources. India team works directly with web vendors for remediation.</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 10px">
-        <div style="background:#ECFDF5;border:1px solid #6ee7b7;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
-          <div style="font-size:18px;font-weight:700;color:#065f46;line-height:1.1">$1.7M</div>
-          <div style="font-size:10px;font-weight:600;color:#047857;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">Software cost eliminated</div>
-        </div>
-        <div style="background:#ECFDF5;border:1px solid #6ee7b7;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
-          <div style="font-size:18px;font-weight:700;color:#065f46;line-height:1.1">$162k</div>
-          <div style="font-size:10px;font-weight:600;color:#047857;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">Myna hours optimized</div>
-        </div>
-      </div>
-      <button class="acc-toggle" onclick="toggleAcc('mmcs')">
-        <span>Before this tool &amp; impact</span><span class="acc-arrow" id="arrow-mmcs">▾</span>
-      </button>
-      <div class="acc-body" id="acc-mmcs">
-        <div class="ba-wrap">
-          <div class="ba-header"><div class="ba-head before">Before</div><div class="ba-head after">After</div></div>
-          <div class="ba-body">
-            <div class="ba-col before">
-              <div class="ba-item"><div class="ba-x">✕</div><div>Cookie compliance only checked on Jonah and non-preferred websites — the rest of the portfolio had no coverage</div></div>
-              <div class="ba-item"><div class="ba-x">✕</div><div>Sites were scanned once at onboarding, then only ~100 random properties per month — leaving thousands unreviewed</div></div>
-              <div class="ba-item"><div class="ba-x">✕</div><div>Non-compliant cookies could remain live indefinitely on the vast majority of the portfolio</div></div>
-            </div>
-            <div class="ba-col after">
-              <div class="ba-item"><div class="ba-check">✓</div><div>MMCS7000 scans all properties on a scheduled cadence — full portfolio coverage every run</div></div>
-              <div class="ba-item"><div class="ba-check">✓</div><div>Non-compliant cookies flagged immediately and routed through Looker Studio for India team remediation</div></div>
-              <div class="ba-item"><div class="ba-check">✓</div><div>Dramatically reduces legal and compliance risk across Greystar and client portfolios</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- MMCS8000 -->
     <div class="tool-card" style="border-left:3px solid #4338ca">
@@ -764,13 +711,13 @@ body{font-family:var(--font-sans);background:#f0f2f5;display:flex;justify-conten
         </div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 10px">
-        <div style="background:#EEF2FF;border:1px solid #c7d2fe;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
-          <div style="font-size:13px;font-weight:700;color:#312e81;line-height:1.35">Full-Portfolio Coverage</div>
-          <div style="font-size:10px;font-weight:600;color:#4338ca;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">Every page on every site scanned</div>
+        <div style="background:#ECFDF5;border:1px solid #6ee7b7;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
+          <div style="font-size:18px;font-weight:700;color:#065f46;line-height:1.1">$1.7M</div>
+          <div style="font-size:10px;font-weight:600;color:#047857;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">Software cost eliminated</div>
         </div>
-        <div style="background:#EEF2FF;border:1px solid #c7d2fe;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
-          <div style="font-size:13px;font-weight:700;color:#312e81;line-height:1.35">Manual Steps Eliminated</div>
-          <div style="font-size:10px;font-weight:600;color:#4338ca;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">OneTrust API replaces Myna manual processes</div>
+        <div style="background:#ECFDF5;border:1px solid #6ee7b7;border-radius:8px;padding:8px 14px;flex:1;min-width:140px">
+          <div style="font-size:18px;font-weight:700;color:#065f46;line-height:1.1">$162k</div>
+          <div style="font-size:10px;font-weight:600;color:#047857;letter-spacing:.05em;text-transform:uppercase;margin-top:3px">Myna hours optimized</div>
         </div>
       </div>
       <button class="acc-toggle" onclick="toggleAcc('mmcs8000')">
@@ -1171,7 +1118,7 @@ body{font-family:var(--font-sans);background:#f0f2f5;display:flex;justify-conten
       </div></div>
     <!-- SPRINT VELOCITY (C) -->
     <div class="sub-panel" id="performance-velocity">
-      <div class="ib">Tasks completed per 2-week sprint · Jan 2025 – May 2026 · 36 sprints · 11,008 total tasks · per-person pull covering all Wrike spaces.</div>
+      <div class="ib" id="team-infobar">Tasks completed per 2-week sprint · Jan 2025 – May 2026 · 36 sprints · 11,008 total tasks · per-person pull covering all Wrike spaces.</div>
       <div class="card" style="padding:16px;margin-top:16px">
         <div class="sl" style="margin-bottom:14px">Sprint Velocity — Total Tasks Completed Per Sprint</div>
         <canvas id="velocityChart" height="180"></canvas>
@@ -1449,6 +1396,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.tile-sprints').forEach((el) => { el.textContent = DASH_META.sprintCount; });
   const ib = document.getElementById('perf-infobar');
   if (ib && typeof yearData !== 'undefined') ib.textContent = yearData[2026].info;
+  const gen = DASH_META.generated.split(' ');                 // e.g. ["Jul","15,","2026"]
+  const monthYear = `${gen[0]} ${gen[gen.length - 1]}`;       // "Jul 2026"
+  set('da-badge', DASH_META.generated);
+  const allTime = DASH_META.teamTotals.DA + DASH_META.teamTotals.India + DASH_META.teamTotals.Myna;
+  set('team-infobar', `Tasks completed per 2-week sprint · Jan 2025 – ${monthYear} · ${DASH_META.sprintCount} sprints · ${allTime.toLocaleString()} total tasks · per-person pull covering all Wrike spaces.`);
 });
 </script>
 </body>
